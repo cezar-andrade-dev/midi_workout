@@ -18,12 +18,12 @@ ARPEGGIO_NOTE_DURATION = 0.5  # seconds
 # HARMONIC SEQUENCES
 # ==========================================================
 
-# Augmented chords used during exercise periods
+# Major chords used during exercise periods
 EXERCISE_ROOTS = [
     "C", "F", "Bb", "Eb", "Ab", "Db"
 ]
 
-# Diminished chords used during rest periods
+# Minor chords used during rest periods
 REST_ROOTS = [
     "Gb", "B", "E", "A", "D", "G"
 ]
@@ -32,8 +32,9 @@ REST_ROOTS = [
 # CHORD INTERVALS (in semitones from the root)
 # ==========================================================
 
-AUGMENTED_INTERVALS = {"third": 4, "fifth": 8}
-DIMINISHED_INTERVALS = {"third": 3, "fifth": 6}
+
+MAJOR_INTERVALS = {"third": 4, "fifth": 7}
+MINOR_INTERVALS = {"third": 3, "fifth": 7}
 
 # ==========================================================
 # MIDI NOTE MAPPING
@@ -181,35 +182,29 @@ def add_triad_section(
         )
 
 
-def add_augmented_section(track: MidiTrack, root_name: str) -> None:
+def add_major_section(track: MidiTrack, root_name: str) -> None:
     """
     5-second exercise block using an augmented triad.
 
-    Example (C Augmented):
-        Chord: C E G#
-        Arpeggio: E C E G# | E C E G#
+    Example (C Major):
+        Chord: C E G
+        Arpeggio: E C E G | E C E G
     """
     add_triad_section(
         track,
         root_name,
-        third_interval=AUGMENTED_INTERVALS["third"],
-        fifth_interval=AUGMENTED_INTERVALS["fifth"]
+        third_interval=MAJOR_INTERVALS["third"],
+        fifth_interval=MAJOR_INTERVALS["fifth"]
     )
 
 
-def add_diminished_section(track: MidiTrack, root_name: str) -> None:
-    """
-    5-second rest block using a diminished triad.
-
-    Example (Gb Diminished):
-        Chord: Gb A C
-        Arpeggio: A Gb A C | A Gb A C
-    """
+def add_minor_section(track: MidiTrack, root_name: str) -> None:
+    
     add_triad_section(
         track,
         root_name,
-        third_interval=DIMINISHED_INTERVALS["third"],
-        fifth_interval=DIMINISHED_INTERVALS["fifth"]
+        third_interval=MINOR_INTERVALS["third"],
+        fifth_interval=MINOR_INTERVALS["fifth"]
     )
 
 
@@ -224,20 +219,20 @@ def create_workout_midi() -> None:
     Workout structure:
 
     Exercise Phase (30 seconds)
-        C+  -> 5 sec
-        F+  -> 5 sec
-        Bb+ -> 5 sec
-        Eb+ -> 5 sec
-        Ab+ -> 5 sec
-        Db+ -> 5 sec
+        C  -> 5 sec
+        F  -> 5 sec
+        Bb -> 5 sec
+        Eb -> 5 sec
+        Ab -> 5 sec
+        Db -> 5 sec
 
     Rest Phase (30 seconds)
-        Gb° -> 5 sec
-        B°  -> 5 sec
-        E°  -> 5 sec
-        A°  -> 5 sec
-        D°  -> 5 sec
-        G°  -> 5 sec
+        Gbm -> 5 sec
+        Bm  -> 5 sec
+        Em  -> 5 sec
+        Am  -> 5 sec
+        Dm  -> 5 sec
+        Gm  -> 5 sec
 
     Repeated NUM_REPETITIONS times.
     """
@@ -269,11 +264,11 @@ def create_workout_midi() -> None:
 
         # Exercise phase
         for root in EXERCISE_ROOTS:
-            add_augmented_section(track, root)
+            add_major_section(track, root)
 
         # Rest phase
         for root in REST_ROOTS:
-            add_diminished_section(track, root)
+            add_minor_section(track, root)
 
     try:
         midi.save(OUTPUT_FILE)

@@ -156,9 +156,9 @@ def add_triad_section(
     Creates a 5-second block built from a triad (root, third, fifth):
 
         1 second  -> chord
-        4 seconds -> arpeggio (third, root, third, fifth) x2
+        4 seconds -> arpeggio (root, third, fifth, third) x2
 
-    Used for both augmented (exercise) and diminished (rest) sections,
+    Used for both major (exercise) and minor (rest) sections,
     the only difference being the third/fifth intervals passed in.
     """
 
@@ -172,7 +172,7 @@ def add_triad_section(
         CHORD_DURATION
     )
 
-    arpeggio_pattern = [third, root, third, fifth] * 2
+    arpeggio_pattern = [root, third, fifth, third] * 2
 
     for note in arpeggio_pattern:
         add_single_note(
@@ -188,7 +188,7 @@ def add_major_section(track: MidiTrack, root_name: str) -> None:
 
     Example (C Major):
         Chord: C E G
-        Arpeggio: E C E G | E C E G
+        Arpeggio: C E G E | C E G E
     """
     add_triad_section(
         track,

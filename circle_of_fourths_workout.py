@@ -35,6 +35,8 @@ REST_ROOTS = [
 
 MAJOR_INTERVALS = {"third": 4, "fifth": 7}
 MINOR_INTERVALS = {"third": 3, "fifth": 7}
+AUGMENTED_INTERVALS = {"third": 4, "fifth": 8}
+DIMINISHED_INTERVALS = {"third": 3, "fifth": 6}
 
 # ==========================================================
 # MIDI NOTE MAPPING
